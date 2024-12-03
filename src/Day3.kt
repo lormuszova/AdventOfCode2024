@@ -1,7 +1,7 @@
 import java.io.File
 
 fun main() {
-    findNumbers()
+    secondPart()
 }
 
 private fun readData(): String {
@@ -10,7 +10,7 @@ private fun readData(): String {
     return file
 }
 
-private fun findNumbers() {
+private fun secondPart() {
     val data = readData().replace("\n", " ").replace("do()", "\ndo()")
     val dos = Regex("don't\\(\\).*").replace(data, "XXX")
     println("dos: $dos")
