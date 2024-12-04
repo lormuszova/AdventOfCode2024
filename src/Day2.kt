@@ -5,7 +5,7 @@ fun main() {
     firstPart()
 }
 
-fun firstPart() {
+private fun firstPart() {
     val data: List<MutableList<Int>> = readData().map { line -> line.split(" ").map { it.toInt() }.toMutableList() }
     var safeRoads = 0
     data.forEach { line ->
