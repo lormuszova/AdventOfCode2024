@@ -25,7 +25,7 @@ private fun partOne() {
         it.value.forEachIndexed { index, pair ->
             val x = pair.first
             val y = pair.second
-            for (i in index..<it.value.size) {
+            for (i in index + 1..<it.value.size) {
                 val x2 = it.value[i].first
                 val y2 = it.value[i].second
 
@@ -36,15 +36,11 @@ private fun partOne() {
                 val secondNewNodeY = y2 + (y2 - y)
 
                 if (!elementOutOfBounds(firstNewNodeX, firstNewNodeY, data)) {
-                    if (data[firstNewNodeX][firstNewNodeY] != it.key) {
-                        data[firstNewNodeX][firstNewNodeY] = '#'
-                    }
+                    data[firstNewNodeX][firstNewNodeY] = '#'
                 }
 
                 if (!elementOutOfBounds(secondNewNodeX, secondNewNodeY, data)) {
-                    if (data[secondNewNodeX][secondNewNodeY] != it.key) {
-                        data[secondNewNodeX][secondNewNodeY] = '#'
-                    }
+                    data[secondNewNodeX][secondNewNodeY] = '#'
                 }
             }
         }
