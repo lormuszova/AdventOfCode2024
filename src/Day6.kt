@@ -1,3 +1,4 @@
+import utils.Direction
 import java.io.File
 
 fun main() {
@@ -289,9 +290,5 @@ private fun nextStep(direction: Direction, position: Pair<Int, Int>): Pair<Int, 
         Direction.LEFT -> Pair(position.first - 1, position.second)
         Direction.DOWN -> Pair(position.first, position.second + 1)
     }
-}
-
-private enum class Direction {
-    RIGHT, UP, LEFT, DOWN
 }
 
