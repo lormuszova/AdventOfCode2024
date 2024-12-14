@@ -7,10 +7,13 @@ fun main() {
     }
 }
 
+const val TOTAL_WIDTH = 101
+const val TOTAL_HEIGHT = 103
+
+
 class Day14 {
-    private val totalHeight = 103
-    private val totalWidth = 101
-    private val quadrants = initializeQuadrants(totalWidth, totalHeight)
+
+    private val quadrants = initializeQuadrants(TOTAL_WIDTH, TOTAL_HEIGHT)
 
     private val safetyFactor = mutableMapOf<Quadrant, Int>().apply {
         quadrants.values.forEach { this[it] = 0 }
@@ -19,7 +22,7 @@ class Day14 {
     fun partTwo() {
         val robots = readData()
         val moves = 100000
-        var map = MutableList(totalHeight) { MutableList(totalWidth) { '.' } }
+        var map = MutableList(TOTAL_HEIGHT) { MutableList(TOTAL_WIDTH) { '.' } }
 
         for (second in 1..moves) {
             robots.forEach { robot ->
@@ -33,7 +36,7 @@ class Day14 {
                 map.forEach { row -> File("output/MapAtSecond.txt").appendText(row.joinToString(" ") + "\n") }
                 break
             }
-            map = MutableList(totalHeight) { MutableList(totalWidth) { '.' } }
+            map = MutableList(TOTAL_HEIGHT) { MutableList(TOTAL_WIDTH) { '.' } }
         }
     }
 
@@ -89,7 +92,7 @@ class Day14 {
     private fun robotInRange(coordinates: Pair<Int, Int>): Boolean {
         val (x, y) = coordinates
 
-        return x in 0..<totalWidth && y in 0..<totalHeight
+        return x in 0..<TOTAL_WIDTH && y in 0..<TOTAL_HEIGHT
     }
 
     private fun moveRobot(robot: Pair<Pair<Int, Int>, Pair<Int, Int>>, moves: Int): Quadrant? {
@@ -98,13 +101,13 @@ class Day14 {
         println("endTotal: $end")
         while (!robotInRange(end)) {
             end = Pair(
-                (end.first + totalWidth) % totalWidth,
-                (end.second + totalHeight) % totalHeight
+                (end.first + TOTAL_WIDTH) % TOTAL_WIDTH,
+                (end.second + TOTAL_HEIGHT) % TOTAL_HEIGHT
             )
-            if (end.first < 0) end = end.copy(first = end.first + totalWidth)
-            if (end.second < 0) end = end.copy(second = end.second + totalHeight)
+            if (end.first < 0) end = end.copy(first = end.first + TOTAL_WIDTH)
+            if (end.second < 0) end = end.copy(second = end.second + TOTAL_HEIGHT)
         }
-        val endInRange = Pair(end.first % totalWidth, end.second % totalHeight)
+        val endInRange = Pair(end.first % TOTAL_WIDTH, end.second % TOTAL_HEIGHT)
         println("endInRange: $endInRange")
         return isInside(endInRange.first, endInRange.second)
 
@@ -115,13 +118,13 @@ class Day14 {
         var end = Pair(start.first + velocity.first * moves, start.second + velocity.second * moves)
         while (!robotInRange(end)) {
             end = Pair(
-                (end.first + totalWidth) % totalWidth,
-                (end.second + totalHeight) % totalHeight
+                (end.first + TOTAL_WIDTH) % TOTAL_WIDTH,
+                (end.second + TOTAL_HEIGHT) % TOTAL_HEIGHT
             )
-            if (end.first < 0) end = end.copy(first = end.first + totalWidth)
-            if (end.second < 0) end = end.copy(second = end.second + totalHeight)
+            if (end.first < 0) end = end.copy(first = end.first + TOTAL_WIDTH)
+            if (end.second < 0) end = end.copy(second = end.second + TOTAL_HEIGHT)
         }
-        val endInRange = Pair(end.first % totalWidth, end.second % totalHeight)
+        val endInRange = Pair(end.first % TOTAL_WIDTH, end.second % TOTAL_HEIGHT)
         return Pair(endInRange.first, endInRange.second)
 
     }
