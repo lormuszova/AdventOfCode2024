@@ -10,7 +10,6 @@ fun main() {
 const val TOTAL_WIDTH = 101
 const val TOTAL_HEIGHT = 103
 
-
 class Day14 {
 
     private val quadrants = initializeQuadrants(TOTAL_WIDTH, TOTAL_HEIGHT)
@@ -46,10 +45,7 @@ class Day14 {
         robots.forEach {
             val endQuadrant = moveRobot(it, moves)
             if (endQuadrant != null) {
-                println("Robot is in $endQuadrant")
                 safetyFactor[endQuadrant] = safetyFactor[endQuadrant]!! + 1
-            } else {
-                println("Robot is out of bounds")
             }
         }
         println("Safety factor: $safetyFactor")
@@ -89,43 +85,16 @@ class Day14 {
         }
     }
 
-    private fun robotInRange(coordinates: Pair<Int, Int>): Boolean {
-        val (x, y) = coordinates
-
-        return x in 0..<TOTAL_WIDTH && y in 0..<TOTAL_HEIGHT
-    }
-
     private fun moveRobot(robot: Pair<Pair<Int, Int>, Pair<Int, Int>>, moves: Int): Quadrant? {
         val (start, velocity) = robot
-        var end = Pair(start.first + velocity.first * moves, start.second + velocity.second * moves)
-        println("endTotal: $end")
-        while (!robotInRange(end)) {
-            end = Pair(
-                (end.first + TOTAL_WIDTH) % TOTAL_WIDTH,
-                (end.second + TOTAL_HEIGHT) % TOTAL_HEIGHT
-            )
-            if (end.first < 0) end = end.copy(first = end.first + TOTAL_WIDTH)
-            if (end.second < 0) end = end.copy(second = end.second + TOTAL_HEIGHT)
-        }
-        val endInRange = Pair(end.first % TOTAL_WIDTH, end.second % TOTAL_HEIGHT)
-        println("endInRange: $endInRange")
-        return isInside(endInRange.first, endInRange.second)
-
+        val end = Pair((start.first + velocity.first * moves).mod(TOTAL_WIDTH), (start.second + velocity.second * moves).mod(TOTAL_HEIGHT))
+        return isInside(end.first, end.second)
     }
 
     private fun moveRobotCoordinates(robot: Pair<Pair<Int, Int>, Pair<Int, Int>>, moves: Int): Pair<Int, Int> {
         val (start, velocity) = robot
-        var end = Pair(start.first + velocity.first * moves, start.second + velocity.second * moves)
-        while (!robotInRange(end)) {
-            end = Pair(
-                (end.first + TOTAL_WIDTH) % TOTAL_WIDTH,
-                (end.second + TOTAL_HEIGHT) % TOTAL_HEIGHT
-            )
-            if (end.first < 0) end = end.copy(first = end.first + TOTAL_WIDTH)
-            if (end.second < 0) end = end.copy(second = end.second + TOTAL_HEIGHT)
-        }
-        val endInRange = Pair(end.first % TOTAL_WIDTH, end.second % TOTAL_HEIGHT)
-        return Pair(endInRange.first, endInRange.second)
+        val end = Pair((start.first + velocity.first * moves).mod(TOTAL_WIDTH), (start.second + velocity.second * moves).mod(TOTAL_HEIGHT))
+        return Pair(end.first, end.second)
 
     }
 }
