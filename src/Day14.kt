@@ -1,6 +1,4 @@
-import kotlinx.coroutines.delay
 import java.io.File
-import java.lang.Character.isDigit
 
 fun main() {
     Day14().apply{
