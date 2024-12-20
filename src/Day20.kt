@@ -1,7 +1,6 @@
 import utils.Direction
 import java.io.File
 import kotlin.math.abs
-import kotlin.math.sign
 import kotlin.system.measureTimeMillis
 
 fun main() {
@@ -99,21 +98,11 @@ class Day20 {
         path.forEach {
             val (coordinates, steps) = it
             val (row, col) = coordinates
-            val jumps: MutableMap<Int, MutableList<Pair<Int, Int>>> = mutableMapOf()
 
             for ((x, y) in possibleJumps) {
                 var stepsAtJump = path.get(row + x to col + y)
                 val stepsWithShortcut = steps + abs(x) + abs(y)
                 if (stepsAtJump != null && stepsAtJump >= stepsWithShortcut + 100) {
-
-                    if (jumps.containsKey(stepsAtJump - stepsWithShortcut)) {
-                        jumps[stepsAtJump - stepsWithShortcut]?.add(Pair(x.sign, y.sign))
-                    } else {
-                        jumps.put(
-                            stepsAtJump - stepsWithShortcut,
-                            mutableListOf(Pair(x.sign, y.sign))
-                        )
-                    }
                     canSavePs++
                 }
             }
